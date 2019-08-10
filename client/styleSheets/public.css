@@ -1,0 +1,12 @@
+.reqWidget{
+    display: inline-block;
+    margin: 5px;
+    font-family: 'Verdana, Geneva, Tahoma, sans-serif'
+}
+
+.reqWidget .widgetHeading{
+    padding: 10px;
+    background-color: #007bb6;
+    color: #ffffff;
+    font-size: 14px;
+}

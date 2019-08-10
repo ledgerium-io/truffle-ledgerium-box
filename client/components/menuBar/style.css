@@ -1,0 +1,19 @@
+.topMenuPanel{
+    height: 35px;
+    background-color: #004681;
+    font-family: 'Courier New';
+    position: relative;
+    z-index: 900;
+    box-shadow: 1px 1px 15px #ababab;
+}
+
+.menuButton {
+    color: #ffffff;
+    font-weight: 300;
+    height: 35px;
+    padding: 0px 10px 0px 10px;
+    border-right: 1px solid #ababab;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

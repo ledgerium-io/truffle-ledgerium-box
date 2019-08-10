@@ -1,0 +1,18 @@
+#header{
+    width: 100%;
+    height: 50px;
+    background-color: #ffffff;
+    overflow: hidden;
+    position: relative;
+    z-index: 999;
+}
+
+#header #titleHolder{
+    float: left;
+    position: relative;
+    text-align: right;
+    height: 100%;
+    font-family: 'Verdana, Geneva, Tahoma, sans-serif';    
+    color: #004681;
+    font-size: 40px;
+}
