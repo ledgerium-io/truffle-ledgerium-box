@@ -19,15 +19,10 @@ export default class Accounts extends Component {
       console.log('web3: ', web3)
       
       let accounts = await web3.eth.getAccounts();
-      console.log('Accounts: ', accounts)   
+      console.log('Accounts: ', accounts)               
       
-      const contract = await getContract(web3, contractDefinition)
-      console.log('contract', contract)
-      
-      this.setState({
-        web3: web3,
-        accounts: accounts,
-        contract: contract
+      this.setState({        
+        accounts: accounts        
       })      
     } catch {
       alert('Failed to load Web3. Check console for details')
