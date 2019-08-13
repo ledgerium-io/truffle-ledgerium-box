@@ -1,4 +1,6 @@
 client/node_modules
+api/node_modules
 client/package-lock.json
+api/package-lock.json
 client/.next
 

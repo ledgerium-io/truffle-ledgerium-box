@@ -54,7 +54,7 @@ export default class Public extends Component {
 
     addInvoice = async (invoiceId) => {        
         console.log('Invoice ID: ',invoiceId);
-        let invoiceIdHash = this.prepareHash(invoiceId)._v;
+        let invoiceIdHash = await this.prepareHash(invoiceId)._v;
         console.log('Invoice ID Hash: ', invoiceIdHash);
 
         let txResult = await this.state.contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: this.state.accounts[0], gas:3000000 });

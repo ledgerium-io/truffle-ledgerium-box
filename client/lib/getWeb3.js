@@ -4,6 +4,7 @@ const resolveWeb3 = (resolve) => {
   let { web3 } = window
   const alreadyInjected = typeof web3 !== 'undefined' // i.e. Mist/Metamask
   // const alreadyInjected = false
+  
   const localProvider = `http://127.0.0.1:7545`
 
   if (alreadyInjected) {

@@ -2,8 +2,9 @@ module.exports = {
   networks: {
     development: {
       host: 'localhost',
-      port: 7545,
+      port: 7545, // was 9000
       network_id: '*' // Match any network id
+      // type: "quorum" // needed for Truffle to support Quorum
     }
   },
   solc: {
