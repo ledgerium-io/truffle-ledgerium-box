@@ -3,6 +3,7 @@ import {Paper} from '@material-ui/core'
 import getWeb3 from '../lib/getWeb3';
 import Layout from '../components/layout/Layout';
 import './../styleSheets/public.css';
+import axios from 'axios';
 
 export default class Accounts extends Component {
   constructor() {
@@ -14,20 +15,25 @@ export default class Accounts extends Component {
   }
 
   async componentDidMount() {
-    try {
-      const web3 = await getWeb3();
-      console.log('web3: ', web3)
+    // try {
+    //   const web3 = await getWeb3();
+    //   console.log('web3: ', web3)
       
-      let accounts = await web3.eth.getAccounts();
-      console.log('Accounts: ', accounts)               
+    //   let accounts = await web3.eth.getAccounts();
+    //   console.log('Accounts: ', accounts)               
       
-      this.setState({        
-        accounts: accounts        
-      })      
-    } catch {
-      alert('Failed to load Web3. Check console for details')
-      console.log(error)
-    }
+    //   this.setState({        
+    //     accounts: accounts        
+    //   })      
+    // } catch {
+    //   alert('Failed to load Web3. Check console for details')
+    //   console.log(error)
+    // }
+    axios.post('http://localhost:9086/getAccounts', {})
+    .then ((result) => {
+      console.log('Result: ', result.data.accounts);
+      this.setState({accounts: result.data.accounts});
+    })
   }
 h
   buildAccountsTable = (accounts) => {

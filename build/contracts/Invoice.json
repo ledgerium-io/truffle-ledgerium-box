@@ -2220,12 +2220,12 @@
     "5777": {
       "events": {},
       "links": {},
-      "address": "0x271439Bbf5cEc8252eBe955B767701D9AC9fBDF3",
-      "transactionHash": "0x2f83c763cbf1c23494959e1497794bbf8ae42377e5c0940baf274b57a35adb46"
+      "address": "0xB393466fb806d26CA8FFfe0852A22904F27E44Df",
+      "transactionHash": "0xa239e4a15cf8e54a72c329efe483f73510a3df111051c34469a472c4b1f83759"
     }
   },
   "schemaVersion": "3.0.11",
-  "updatedAt": "2019-08-13T18:12:25.818Z",
+  "updatedAt": "2019-08-15T06:12:46.972Z",
   "devdoc": {
     "methods": {}
   },
