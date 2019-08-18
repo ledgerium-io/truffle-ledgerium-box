@@ -15,6 +15,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.16.4",
+    "node-metamask": "^1.1.2",
     "nodemon": "^1.18.11",
     "path": "^0.12.7",
     "web3": "^1.2.1"

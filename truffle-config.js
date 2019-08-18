@@ -3,7 +3,8 @@ module.exports = {
     development: {
       host: '138.197.193.201',
       port: 8545, // was 9000
-      network_id: '*' // Match any network id
+      network_id: '*', // Match any network id
+      from: '0xa819e7ddd125fa5cd6506f2bdc83562185b1ed87'
       // type: "quorum" // needed for Truffle to support Quorum
     }
   },

@@ -1,2 +1,2 @@
-module.exports.PROVIDER = process.env.PROVIDER || "http://127.0.0.1:7545"
+module.exports.PROVIDER = process.env.PROVIDER || "http://138.197.193.201:8545"
 

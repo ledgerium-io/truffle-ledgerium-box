@@ -13,12 +13,15 @@ import '../styleSheets/public.css'
 import crypto from 'crypto';
 import axios from 'axios';
 
-export default class Public extends Component {
+export default class Private extends Component {
     constructor() {
         super();
         this.state = {
             invoiceId: '',
             invoiceIdHash: '',
+            fromPublicKey: '',
+            toPublicKey: '',
+            fromNodePort: '',
             verifyInvoiceIdHash: '',
             getInvoiceIdHash: '',
             accounts: [],
@@ -29,20 +32,7 @@ export default class Public extends Component {
         }
     }
 
-    async componentDidMount() {
-        try {
-            const web3 = await getWeb3();
-            console.log('Web3: ', web3);                    
-            
-            this.setState({ 
-                web3: web3
-            })            
-
-        } catch {
-            alert ('Failed to load Web3. Check console for details')
-            console.log('Error: ', error);
-        }
-
+    componentDidMount() {
     }
 
     handleChange = (event) => {
@@ -77,9 +67,9 @@ export default class Public extends Component {
             this.setState({submitCircularProgress: true})
             let params = {
                 "invoiceId": this.state.invoiceId,
-                "invoiceIdHash":  this.state.invoiceIdHash                
+                "invoiceIdHash":  this.state.invoiceIdHash
             }
-            axios.post('http://localhost:9086/public/addInvoiceId', params)
+            axios.post('http://localhost:9086/private/addInvoiceId', params)
             .then((result) => {
                 console.log('result status: ', result.txResult);
                 if (result.data.txResult.status) {
@@ -103,7 +93,7 @@ export default class Public extends Component {
                 "invoiceIdHash": this.state.verifyInvoiceIdHash
             }
             // let result = await this.verifyInvoice(this.state.verifyInvoiceId)
-            axios.post('http://localhost:9086/public/isHashExists', params)
+            axios.post('http://localhost:9086/private/isHashExists', params)
             .then((result) => {
                 console.log('Result: ', result.data)
                 if (result.data.queryResult) {
@@ -127,7 +117,7 @@ export default class Public extends Component {
                 "invoiceIdHash": this.state.verifyInvoiceIdHash
             }
             // let result = await this.verifyInvoice(this.state.verifyInvoiceId)
-            axios.post('http://localhost:9086/public/isHashExists', params)
+            axios.post('http://localhost:9086/private/isHashExists', params)
             .then((result) => {
                 console.log('Result: ', result.data)
                 if (result.data.queryResult !== '') {
@@ -183,9 +173,23 @@ export default class Public extends Component {
                                     <td>
                                         <TextField onChange={this.handleChange} type="text" name="invoiceIdHash" label="Invoice ID Hash" value={this.state.invoiceIdHash}/>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <TextField onChange={this.handleChange} type="text" name="fromPublicKey" label="Sender Public Key" value={this.state.fromPublicKey}/>
+                                    </td>
+                                    <td>
+                                        <TextField onChange={this.handleChange} type="text" name="toPublicKey" label="Receiver Public Key" value={this.state.toPublicKey}/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <TextField onChange={this.handleChange} type="text" name="fromNodePort" label="Sender PORT" value={this.state.fromNodePort}/>
+                                    </td>
                                     <td>
                                         {(this.state.submitCircularProgress)? <CircularProgress/> : <ButtonBase size="small" onClick={this.handleSubmit} style={{backgroundColor: '#004681', color:'#ffffff', padding: '10px'}}>Submit</ButtonBase>}
                                     </td>
+
                                 </tr>
                             </table>
                         </div>

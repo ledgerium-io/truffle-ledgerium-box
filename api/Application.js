@@ -4,6 +4,9 @@ const getAccountsHandler            = require('./src/handlers/getAccounts/GetAcc
 const publicAddInvoiceIdHandler     = require('./src/handlers/public/addInvoiceId/AddInvoiceIdHandler');
 const publicIsHashExistsHandler     = require('./src/handlers/public/isHashExists/IsHashExistsHandler');
 const publicGetInvoiceIdHandler     = require('./src/handlers/public/getInvoiceId/GetInvoiceIdHandler');
+const privateAddInvoiceIdHandler    = require('./src/handlers/private/addInvoiceId/AddInvoiceIdHandler');
+const privateIsHashExistsHandler    = require('./src/handlers/private/isHashExists/IsHashExistsHandler');
+const privateGetInvoiceIdHandler    = require('./src/handlers/private/getInvoiceId/GetInvoiceIdHandler');
 
 const app               = express();
 const port              = process.env.PORT || 9086;
@@ -31,6 +34,9 @@ registerRoutes = () => {
     app.use('/public/addInvoiceId', publicAddInvoiceIdHandler);
     app.use('/public/isHashExists', publicIsHashExistsHandler);
     app.use('/public/getInvoiceId', publicGetInvoiceIdHandler);
+    app.use('/private/addInvoiceId', privateAddInvoiceIdHandler);
+    app.use('/private/isHashExists', privateIsHashExistsHandler);
+    app.use('/private/getInvoiceId', privateGetInvoiceIdHandler);
 }
 
 server = () => {
