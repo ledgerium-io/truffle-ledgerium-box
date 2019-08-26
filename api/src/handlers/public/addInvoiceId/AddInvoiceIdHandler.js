@@ -42,7 +42,8 @@ router.post('/', (req, res) => {
                 console.log(accounts);
                 getContarct.get(web3, contractDef).then((contract) => {    
                     console.log(accounts)
-                    contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: '0xa819e7ddd125fa5cd6506f2bdc83562185b1ed87', gas:3000000 }).then((txResult) => {
+                    // contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: "0x74f68A6e428f060a1Dff3e9C89d22F2504416499", gas:3000000 }).then((txResult) => {
+                        contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: accounts[0], gas:3000000 }).then((txResult) => {
                         console.log('Tx Result: ', JSON.stringify(txResult));
                         res.send({status: true, txResult: txResult});
                     })

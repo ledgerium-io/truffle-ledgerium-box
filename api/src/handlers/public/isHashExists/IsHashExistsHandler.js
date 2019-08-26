@@ -13,7 +13,9 @@ router.post('/', (req, res) => {
             web3.eth.getAccounts().then((accounts) => {
                 getContarct.get(web3, contractDef).then((contract) => {    
                     console.log(accounts)
-                    contract.methods.isHashExists(invoiceIdHash).call({ from: accounts[0] }).then((queryResult) => {
+                    console.log(contract.methods)
+                    console.log('Invoice ID Hash: ', invoiceIdHash);
+                    contract.methods.isHashExists(invoiceIdHash).call({ from: accounts[1] }).then((queryResult) => {
                         console.log('Query Result: ', JSON.stringify(queryResult));
                         res.send({status: true, queryResult: queryResult});
                     })        
@@ -21,6 +23,7 @@ router.post('/', (req, res) => {
             })
         })
     } catch (error) {
+        console.log("Error: ", error);
         res.send({status: false});
     }
 })

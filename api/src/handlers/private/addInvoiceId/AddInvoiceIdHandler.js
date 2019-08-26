@@ -6,9 +6,11 @@ const contractDef   = require('./../../../lib/contracts/Invoice.json');
 const MetaMaskConnector = require('node-metamask');
 
 router.post('/', (req, res) => {
-    let invoiceId       = req.body.invoiceId;
-    let invoiceIdHash   = req.body.invoiceIdHash;
-    let web3            = req.body.web3;
+    let invoiceId           = req.body.invoiceId;
+    let invoiceIdHash       = req.body.invoiceIdHash;
+    let web3                = req.body.web3;
+    let fromPublicAddress   = req.body.fromPublicAddress;
+    let toPublicAddress     = req.body.toPublicAddress;
     const connector = new MetaMaskConnector({
         port: 3333, // this is the default port
         onConnect() { console.log('MetaMask client connected') }, // Function to run when MetaMask is connected (optional)
@@ -28,7 +30,7 @@ router.post('/', (req, res) => {
             web3.eth.getAccounts().then((accounts) => {
                 getContarct.get(web3, contractDef).then((contract) => {    
                     console.log(accounts)
-                    contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: accounts[0], gas:3000000 }).then((txResult) => {
+                    contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: "0x74f68A6e428f060a1Dff3e9C89d22F2504416499", gas:3000000, privateFor: [fromPublicAddress, toPublicAddress] }).then((txResult) => {
                         console.log('Tx Result: ', JSON.stringify(txResult));
                         res.send({status: true, txResult: txResult});
                     })

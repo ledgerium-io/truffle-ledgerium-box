@@ -67,10 +67,12 @@ export default class Private extends Component {
             this.setState({submitCircularProgress: true})
             let params = {
                 "invoiceId": this.state.invoiceId,
-                "invoiceIdHash":  this.state.invoiceIdHash
+                "invoiceIdHash":  this.state.invoiceIdHash,
+                "fromPublicKety": this.state.fromPublicKey,
+                "fromPrivateKey": this.state.toPublicKey
             }
             axios.post('http://localhost:9086/private/addInvoiceId', params)
-            .then((result) => {
+            .then((result) => { 
                 console.log('result status: ', result.txResult);
                 if (result.data.txResult.status) {
                     this.setState({invoiceId: '', invoiceIdHash: '', submitCircularProgress: false});

@@ -28,10 +28,16 @@ export default class MenuBar extends Component {
                 "url": "/public"
             },
             {
+                "id": "publicMetamask",
+                "label": "Public Metamask",
+                "url": "/publicMetamask"
+            },
+            {
                 "id": "private",
                 "label": "Private",
                 "url": "/private"
-            }
+            },
+            
         ]
 
         this.buildTopLevelMenu(this.menuContent)
