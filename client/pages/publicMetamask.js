@@ -55,49 +55,23 @@ export default class Public extends Component {
 
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value})
-    }
-
-    addInvoice = async (invoiceId, invoiceIdHash) => {        
-        console.log('Invoice ID: ',invoiceId);
-        console.log('Invoice ID: ',invoiceIdHash);
-
-        console.log('Methods: ', this.state.contract.methods)
-        try {
-            // let txResult = await this.state.contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: "0x74f68A6e428f060a1Dff3e9C89d22F2504416499", gas:3000000 });
-            let txResult = await this.state.contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: this.state.accounts[0], gas:3000000 });
-            console.log('Tx Result: ',txResult);        
-            return txResult;
-        } catch (error) {
-            console.log('Error: ', error);
-            return null;
-        }
-    };
-
-    isHashExists = async (invoiceIdHash) => {        
-        console.log('Invoice ID Hash: ', invoiceIdHash);
-        let txResult = await this.state.contract.methods.isHashExists(invoiceIdHash).call({ from: this.state.accounts[0]  })
-        console.log('Tx Result: ', txResult);
-        return txResult;
     }    
-
-    getInvoiceId = async (invoiceIdHash) => {        
-        console.log('Invoice ID Hash: ', invoiceIdHash);
-        let txResult = await this.state.contract.methods.getInvoiceID(invoiceIdHash).call({ from: this.state.accounts[0] })
-        console.log('Tx Result: ', txResult);
-        return txResult;
-    }    
-
+    
     handleSubmit = async () => {
         if (this.state.invoiceId !== '' && this.state.invoiceIdHash !== '') {
-            this.setState({submitCircularProgress: true})
-            let result = await this.addInvoice(this.state.invoiceId, this.state.invoiceIdHash)
-            if (result.status) {
-                this.setState({invoiceId: '', invoiceIdHash: '', submitCircularProgress: false});
-                alert(`Sucessfully added Invoice ID!`)
-            } else {
-                this.setState({submitCircularProgress: false});
-                alert('Failed to add Invoice ID!')
-            }            
+            this.setState({submitCircularProgress: true})            
+            this.state.contract.methods.addInvoice(this.state.invoiceId, this.state.invoiceIdHash).send({ from: this.state.accounts[0], gas:300000 }, (err, txHash) => {
+                this.state.web3.eth.getTransactionReceiptMined(txHash).then((txResult) => {
+                    console.log("Tx Result: ", txResult)                    
+                    if (txResult.status) {
+                        this.setState({invoiceId: '', invoiceIdHash: '', submitCircularProgress: false});
+                        alert(`Sucessfully added Invoice ID!`)
+                    } else {
+                        this.setState({submitCircularProgress: false});
+                        alert('Failed to add Invoice ID!')
+                    }            
+                })
+            })                                                                
         } else {
             alert('Missing Invoice ID or Invoice ID hash')
             console.log('Invoice ID is missing');
@@ -107,9 +81,8 @@ export default class Public extends Component {
     handleIsHashExists = async () => {
         if (this.state.verifyInvoiceIdHash !== '') {
             this.setState({verifyCircularProgress: true})
-            
-            let result = await this.isHashExists(this.state.verifyInvoiceIdHash)            
-            if (result) {
+            let txResult = await this.state.contract.methods.isHashExists(this.state.verifyInvoiceIdHash).call({ from: this.state.accounts[0]  })
+            if (txResult) {
                 this.setState({verifyInvoiceIdHash: '', verifyCircularProgress: false});
                 alert(`Invoice ID Hash Exists!`)
             } else {
@@ -124,12 +97,9 @@ export default class Public extends Component {
 
     handleGetInvoiceId = async () => {
         if (this.state.getInvoiceIdHash !== '') {
-            this.setState({getInvoiceIdCircularProgress: true})
-            let params = {
-                "invoiceIdHash": this.state.getInvoiceIdHash
-            }
-            let result = await this.getInvoiceId(this.state.getInvoiceIdHash)            
-            if (result) {
+            this.setState({getInvoiceIdCircularProgress: true})            
+            let txResult = await this.state.contract.methods.getInvoiceID(this.state.getInvoiceIdHash).call({ from: this.state.accounts[0] })
+            if (txResult) {
                 this.setState({getInvoiceIdHash: '', getInvoiceIdCircularProgress: false});                    
                 alert(`Invoice ID Hash Exists! Invoice ID ${result}`)
             } else {

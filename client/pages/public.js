@@ -98,7 +98,7 @@ export default class Public extends Component {
 
     handleVerify = async () => {
         if (this.state.verifyInvoiceIdHash !== '') {
-            this.setState({verifyCircularProgress: true})
+            // this.setState({verifyCircularProgress: true})
             let params = {
                 "invoiceIdHash": this.state.verifyInvoiceIdHash
             }
@@ -122,7 +122,7 @@ export default class Public extends Component {
 
     handleIsHashExists = async () => {
         if (this.state.verifyInvoiceIdHash !== '') {
-            this.setState({verifyCircularProgress: true})
+            // this.setState({verifyCircularProgress: true})
             let params = {
                 "invoiceIdHash": this.state.verifyInvoiceIdHash
             }

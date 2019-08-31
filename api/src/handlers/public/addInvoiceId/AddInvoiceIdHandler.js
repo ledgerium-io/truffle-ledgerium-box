@@ -23,27 +23,14 @@ router.post('/', (req, res) => {
     console.log('Web3: ', web3)
 
     try {
-    //     var ethAccountToUse = accountAddressList[0];
-    // var deployedAddressInvoice = "0xf6499E3029c704A70dc6389dA71D60f544463469";
-    
-    // var invoice = new web3.eth.Contract(JSON.parse(value[0]),deployedAddressInvoice);
-    // global.invoice = invoice;
-    
-    // var result = await invoice.methods.isHashExists(hashVal).call({from : ethAccountToUse});
-    // console.log("isHashExists after", result);
-    
-    // let encodedABI = invoice.methods.addInvoice(invoiceID,hashVal).encodeABI();
-    // var transactionObject = await utils.sendMethodTransaction(ethAccountToUse,deployedAddressInvoice,encodedABI,privateKey[ethAccountToUse],web3,0);
-    // console.log("TransactionLog for Invoice Setvalue -", transactionObject.transactionHash);
-
         getWeb3.get().then((web3) => {
             console.log('Web3: ', web3)
             web3.eth.getAccounts().then((accounts) => {
                 console.log(accounts);
                 getContarct.get(web3, contractDef).then((contract) => {    
                     console.log(accounts)
-                    // contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: "0x74f68A6e428f060a1Dff3e9C89d22F2504416499", gas:3000000 }).then((txResult) => {
-                        contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: accounts[0], gas:3000000 }).then((txResult) => {
+                    contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: "0x74f68A6e428f060a1Dff3e9C89d22F2504416499", gas:300000 }).then((txResult) => {
+                        // contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: accounts[0], gas:3000000 }).then((txResult) => {
                         console.log('Tx Result: ', JSON.stringify(txResult));
                         res.send({status: true, txResult: txResult});
                     })

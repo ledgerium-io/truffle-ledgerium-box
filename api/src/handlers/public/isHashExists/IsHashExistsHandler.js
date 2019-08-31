@@ -13,12 +13,17 @@ router.post('/', (req, res) => {
             web3.eth.getAccounts().then((accounts) => {
                 getContarct.get(web3, contractDef).then((contract) => {    
                     console.log(accounts)
-                    console.log(contract.methods)
+                    console.log(contract)
                     console.log('Invoice ID Hash: ', invoiceIdHash);
-                    contract.methods.isHashExists(invoiceIdHash).call({ from: accounts[1] }).then((queryResult) => {
+                    contract.methods.isHashExists(invoiceIdHash).call({from : "0xf6499E3029c704A70dc6389dA71D60f544463469"}, (err, queryResult) => {
+                        console.log('Error: ', err);
                         console.log('Query Result: ', JSON.stringify(queryResult));
                         res.send({status: true, queryResult: queryResult});
-                    })        
+                    })
+                    // .then((queryResult) => {
+                    //     console.log('Query Result: ', JSON.stringify(queryResult));
+                    //     res.send({status: true, queryResult: queryResult});
+                    // })        
                 })
             })
         })
