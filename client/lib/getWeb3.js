@@ -1,23 +1,29 @@
 import Web3 from 'web3'
 
 const resolveWeb3 = (resolve) => {
-  let { web3 } = window
-  const alreadyInjected = typeof web3 !== 'undefined' // i.e. Mist/Metamask
+  // let { web3 } = window
+  // console.log('Window:------------ ', window.ledgerium)
+  // console.log('Web3: --', web3)
+  // const alreadyInjected = typeof web3 !== 'undefined' // i.e. Mist/Metamask
   // const alreadyInjected = false
+  // console.log('----------------------', alreadyInjected)
   
-  const localProvider = `http://127.0.0.1:7545`
+  // const localProvider = `http://127.0.0.1:7545`
 
-  if (alreadyInjected) {
+  // if (alreadyInjected) {
     console.log(`Injected web3 detected.`)
-    web3 = new Web3(web3.currentProvider)
-  } else {
-    console.log(`No web3 instance injected, using Local web3.`)
-    const provider = new Web3.providers.HttpProvider(localProvider)
-    // new Web3.providers.HttpProvider("http://127.0.0.1:7545"),
-    web3 = new Web3(provider)
-  }
+    web3 = new Web3(window.ledgerium);
+    web3.eth.getTransactionReceiptMined = require("./getTransactionReceiptMined");
+    resolve(web3)
 
-  resolve(web3)
+  // } else {
+    // console.log(`No web3 instance injected, using Local web3.`)
+    // const provider = new Web3.providers.HttpProvider(localProvider)
+    // new Web3.providers.HttpProvider("http://127.0.0.1:7545"),
+    // web3 = new Web3(provider)
+    // resolve(web3)
+  // }
+
 }
 
 export default () =>
