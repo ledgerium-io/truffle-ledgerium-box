@@ -1,7 +1,7 @@
 const express       = require('express');
 const router        = express.Router();
 const getWeb3       = require('../../../lib/getWeb3');
-const getContarct   = require('../../../lib/getContract');
+const getContract   = require('../../../lib/getContract');
 const contractDef   = require('./../../../lib/contracts/Invoice.json');
 const MetaMaskConnector = require('node-metamask');
 
@@ -22,13 +22,13 @@ router.post('/', (req, res) => {
         // Use web3 as you would normally do. Sign transactions in the browser.
     });
 
-    console.log('Web3: ', web3)
+    //console.log('Web3: ', web3)
 
     try {
         getWeb3.get().then((web3) => {
-            console.log('Web3: ', web3)
+            //console.log('Web3: ', web3)
             web3.eth.getAccounts().then((accounts) => {
-                getContarct.get(web3, contractDef).then((contract) => {    
+                getContract.get(web3, contractDef).then((contract) => {    
                     console.log(accounts)
                     contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: "0x74f68A6e428f060a1Dff3e9C89d22F2504416499", gas:3000000, privateFor: [fromPublicAddress, toPublicAddress] }).then((txResult) => {
                         console.log('Tx Result: ', JSON.stringify(txResult));
