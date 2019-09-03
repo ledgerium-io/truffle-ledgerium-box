@@ -1,5 +1,5 @@
-const Invoice = artifacts.require('./Invoice.sol')
+var Migrations = artifacts.require("./Migrations.sol");
 
-module.exports = function (deployer) {
-  deployer.deploy(Invoice)
-}
+module.exports = function(deployer) {
+  deployer.deploy(Migrations);
+};
