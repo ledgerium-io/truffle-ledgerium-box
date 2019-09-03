@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
                     console.log(accounts)
                     console.log(contract)
                     console.log('Invoice ID Hash: ', invoiceIdHash);
-                    contract.methods.isHashExists(invoiceIdHash).call({from : "0xf6499E3029c704A70dc6389dA71D60f544463469"}, (err, queryResult) => {
+                    contract.methods.isHashExists(invoiceIdHash).call({from : "0xd34fC4abe46BfDb1939e00b3dcd5B27911a6C05d"}, (err, queryResult) => {
                         console.log('Error: ', err);
                         console.log('Query Result: ', JSON.stringify(queryResult));
                         res.send({status: true, queryResult: queryResult});

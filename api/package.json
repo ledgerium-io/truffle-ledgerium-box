@@ -1,8 +1,8 @@
 {
-  "name": "truffle-box",
+  "name": "truffle-ledgerium-box",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "Application.js",
   "directories": {
     "lib": "lib"
   },

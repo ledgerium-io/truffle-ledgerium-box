@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
             web3.eth.getAccounts().then((accounts) => {
                 getContarct.get(web3, contractDef).then((contract) => {    
                     console.log(accounts)
-                    contract.methods.getInvoiceID(invoiceIdHash).call({ from: "0x74f68A6e428f060a1Dff3e9C89d22F2504416499" }).then((queryResult) => {
+                    contract.methods.getInvoiceID(invoiceIdHash).call({ from: "0xd34fC4abe46BfDb1939e00b3dcd5B27911a6C05d" }).then((queryResult) => {
                         console.log('Query Result: ', JSON.stringify(queryResult));
                         res.send({status: true, queryResult: queryResult});
                     })        
