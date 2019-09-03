@@ -14,8 +14,4 @@ module.exports = withImages(
         }
     })
 )
-
-// module.exports = {
-// }
-
   

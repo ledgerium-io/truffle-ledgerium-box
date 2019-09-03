@@ -28,9 +28,9 @@ export default class MenuBar extends Component {
                 "url": "/public"
             },
             {
-                "id": "publicMetamask",
-                "label": "Public Metamask",
-                "url": "/publicMetamask"
+                "id": "publicwallet",
+                "label": "Using Wallet",
+                "url": "/publicwallet"
             },
             {
                 "id": "private",

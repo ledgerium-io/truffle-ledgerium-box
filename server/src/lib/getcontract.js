@@ -5,7 +5,7 @@ const get = async (web3, contractDefinition) => {
     //const deployedAddress = "0x0000000000000000000000000000000000002020";
     const deployedAddress = "0xBeA37B161d94b2c3140376E264929BC21B0A1518";
 
-    console.log(deployedAddress);
+    console.log(`Dealing with Invoice Smart Contract Address: ${deployedAddress}`);
 
     // create the instance
     const instance = new web3.eth.Contract(
@@ -14,5 +14,4 @@ const get = async (web3, contractDefinition) => {
     )
     return instance
 }
-
 exports.get = get

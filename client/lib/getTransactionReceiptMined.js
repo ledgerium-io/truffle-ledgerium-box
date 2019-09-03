@@ -1,5 +1,5 @@
 const Promise = require("bluebird");
-const sequentialPromise = require("./sequentialPromise.js");
+const sequentialPromise = require("./sequentialpromise.js");
 
 /**
  * @param {!string | !Array.<!string>} txHash, a transaction hash or an array of transaction hashes.
