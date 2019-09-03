@@ -1,12 +1,11 @@
 import React,{ Component } from 'react';
-import Header from '../header/Header';
-import MenuBar from '../menuBar/MenuBar';
+import Header from '../header/header';
+import MenuBar from '../menubar/menubar';
 
 export default class Layout extends Component {
     constructor(){
         super();
     }
-
     render() {
         return(
             <div style={{height:'100%'}}>

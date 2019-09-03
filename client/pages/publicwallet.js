@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
-import Layout from '../components/layout/Layout'
+import Layout from '../components/layout/layout'
 import {
     Paper,    
     TextField,
     CircularProgress,
     ButtonBase
 } from '@material-ui/core';
-import getWeb3 from '../lib/getWeb3';
-import getContract from '../lib/getContract';
+import getWeb3 from '../lib/getweb3';
+import getContract from '../lib/getcontract';
 import contractDefinition from '../lib/contracts/Invoice.json'
-import '../styleSheets/public.css'
-import crypto from 'crypto';
-import axios from 'axios';
+import '../stylesheets/public.css'
 
 export default class Public extends Component {
     constructor() {
@@ -32,14 +30,11 @@ export default class Public extends Component {
     async componentDidMount() {
         try {
             const web3 = await getWeb3();
-            //console.log('Web3: ', web3);    
-            
             let accounts = await web3.eth.getAccounts();
             console.log('Accounts: ', accounts);
             
             let contract = await getContract(web3, contractDefinition)
-            console.log('contract', contract)
-            
+
             this.setState({ 
                 web3: web3, 
                 accounts: accounts, 
@@ -62,7 +57,7 @@ export default class Public extends Component {
             this.setState({submitCircularProgress: true})            
             this.state.contract.methods.addInvoice(this.state.invoiceId, this.state.invoiceIdHash).send({ from: this.state.accounts[0], gas:300000 }, (err, txHash) => {
                 this.state.web3.eth.getTransactionReceiptMined(txHash).then((txResult) => {
-                    console.log("Tx Result: ", txResult)                    
+                    console.log("Tx Hash: ", txHash)                    
                     if (txResult.status) {
                         this.setState({invoiceId: '', invoiceIdHash: '', submitCircularProgress: false});
                         alert(`Sucessfully added Invoice ID!`)

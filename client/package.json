@@ -1,13 +1,13 @@
 {
-  "name": "react_base",
+  "name": "truffle-ledgerium-box-reactclient",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon Server.js"
+    "dev": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ledgerium",
   "license": "ISC",
   "dependencies": {
     "@material-ui/core": "^4.3.1",
