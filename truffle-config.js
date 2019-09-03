@@ -1,11 +1,10 @@
 module.exports = {
   networks: {
-    development: {
-      host: '138.197.193.201',
-      port: 8545, // was 9000
-      network_id: '*', // Match any network id
-      from: '0x74f68A6e428f060a1Dff3e9C89d22F2504416499'
-      // type: "quorum" // needed for Truffle to support Quorum
+    flinders: {
+      host: '138.197.193.201', //toorak testnet, '138.197.193.201' for flinders
+      port: 8545, //Need to check with RPC port of the specific ledgerium node, default 8545
+      network_id: '2020', // Match any network id
+      from: '0xd34fC4abe46BfDb1939e00b3dcd5B27911a6C05d'
     }
   },
   solc: {
@@ -19,20 +18,5 @@ module.exports = {
       enabled: true,
       runs: 200
     }
-  },
-  ignore: [
-    "README.md",
-    ".gitignore"
-  ],
-  commands: {
-    "Compile": "truffle compile",
-    "Migrate": "truffle migrate",
-    "Test contracts": "truffle test",
-    "Test dapp": "npm test",
-    "Run dev server": "npm run start",
-    "Build for production": "npm run build"
-  },
-  hooks: {
-    "post-unpack": "npm install"
   }
 };

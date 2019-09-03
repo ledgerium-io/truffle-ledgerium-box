@@ -32,7 +32,7 @@ export default class Public extends Component {
     async componentDidMount() {
         try {
             const web3 = await getWeb3();
-            console.log('Web3: ', web3);    
+            //console.log('Web3: ', web3);    
             
             let accounts = await web3.eth.getAccounts();
             console.log('Accounts: ', accounts);
@@ -101,7 +101,7 @@ export default class Public extends Component {
             let txResult = await this.state.contract.methods.getInvoiceID(this.state.getInvoiceIdHash).call({ from: this.state.accounts[0] })
             if (txResult) {
                 this.setState({getInvoiceIdHash: '', getInvoiceIdCircularProgress: false});                    
-                alert(`Invoice ID Hash Exists! Invoice ID ${result}`)
+                alert(`Invoice ID Hash Exists! Invoice ID ${txResult}`)
             } else {
                 this.setState({getInvoiceIdCircularProgress: false});
                 alert('Invoice ID Hash didn\'t Exists')

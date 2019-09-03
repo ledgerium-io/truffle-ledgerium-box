@@ -32,7 +32,7 @@ export default class Public extends Component {
     async componentDidMount() {
         try {
             const web3 = await getWeb3();
-            console.log('Web3: ', web3);                    
+            //console.log('Web3: ', web3);                    
             
             this.setState({ 
                 web3: web3
