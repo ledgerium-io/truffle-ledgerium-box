@@ -54,3 +54,46 @@ migrate
 ```
 truffle migrate
 ```
+
+## Run node express back end server
+
+1. First ensure that you're in the truffle-ledgerium-box/api folder.
+
+2. Run the npm install command. This will install all necessary node dependencies.
+
+```
+npm install
+```
+
+3. Run the node express back end server in dev mode. This will up bring the express server on PORT 9086.
+
+```
+npm run dev
+```
+
+4. Make a test get call to express server. This will return "Hello from the API message".
+
+```
+http://localhost:9086
+```
+
+## Run react front end application
+
+1. First ensure that you're in the truffle-ledgerium-box/client folder.
+
+2. Run the npm install command. This will install all necessary node dependencies.
+
+```
+npm install
+```
+
+3. Run the web application in dev mode. This will up bring the react front end application on PORT 4000.
+
+```
+npm run dev
+```
+4. Check out to the following URL to access the web application.
+
+```
+http://localhost:4000
+```
