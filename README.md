@@ -109,8 +109,12 @@ Summary
 ```
 
 - **Take the test XLG from Ledgerium Faucet** 
+  
+  <img src="ledgerium-faucet.png" width="640" height="300"/>
 
-Connect to Ledgerium Blockchain Flinders testnet with one of the Block Producer’s node `138.197.193.201`. Additionally, the Ledgerium account which needs to be used to execute public transactions has to be imported as the node’s native account. Below are the steps showing, how to connect to the remote node on RPC `http://138.197.193.201:8545` and import the account using its private key, along with some password (which needs to be remembered for later usages too).
+- **Connect to Ledgerium Blockchain Flinders testnet** 
+  
+  Connect with one of the Block Producer’s node `138.197.193.201`. Additionally, the Ledgerium account which needs to be used to execute public transactions has to be imported as the node’s native account. Below are the steps showing, how to connect to the remote node on RPC `http://138.197.193.201:8545` and import the account using its private key, along with some password (which needs to be remembered for later usages too).
 
 ``` 
 >  geth attach http://138.197.193.201:8545
