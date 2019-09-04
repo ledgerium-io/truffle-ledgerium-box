@@ -12,7 +12,7 @@ export default class Header extends Component {
                 <a className="navbar-logo" href="http://testnet.ledgerium.net:2000/app/blockexplorer">
                     <img alt="Logo" width="75px" src={logo} />
                 </a>
-                <div id="titleHolder">Ledgerium Blockchain on Truffle</div>
+                <div id="titleHolder">Truffle with Ledgerium Blockchain</div>
             </div>
         )
     }

@@ -4,6 +4,7 @@ const getWeb3       = require('../../../lib/getweb3');
 const getContract   = require('../../../lib/getcontract');
 const contractDef   = require('./../../../lib/contracts/Invoice.json');
 const LedgeriumWalletConnector = require('node-metamask');
+const account       = require('../../../globalconfig').ACCOUNT;
 
 router.post('/', (req, res) => {
     let invoiceId       = req.body.invoiceId;
@@ -24,7 +25,7 @@ router.post('/', (req, res) => {
             web3.eth.getAccounts().then((accounts) => {
                 getContract.get(web3, contractDef).then((contract) => {    
                     console.log(`Invoice Id ${invoiceId}, Invoice Hash ${invoiceIdHash}`);
-                    contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: "0xd34fC4abe46BfDb1939e00b3dcd5B27911a6C05d", gas:300000 }).then((txResult) => {
+                    contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: account, gas:300000 }).then((txResult) => {
                         console.log('Tx Result: ', JSON.stringify(txResult));
                         res.send({status: true, txResult: txResult});
                     })
