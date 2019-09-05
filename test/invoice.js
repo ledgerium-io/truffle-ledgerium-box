@@ -9,21 +9,22 @@ contract("Invoice", accounts => {
     const invoiceInstance = await Invoice.deployed();
 
     let URL = 'http://' + host + ':' + port;
-    console.log("Going to connect to ", URL);
     let web3 = new Web3(new Web3.providers.HttpProvider(URL));
-    web3.personal.unlockAccount(account,"password")
+    web3.personal.unlockAccount(account,"password");
     
-    const invoiceID = "101";
-    const hashInvoice = "0xa0b6442334d0cdf";
+    //We are not using accounts of the node, given by the framework!
+    const invoiceID = "102";
+    const hashInvoice = "0xa0b644236540cdf";
     // add the invoice
-    await invoiceInstance.addInvoice(invoiceID, hashInvoice, { from: accounts[0] });
+    var transaction = await invoiceInstance.addInvoice(invoiceID, hashInvoice, { from: account });
 
     // verify if invoice exists
-    const isInvoiceExists = await invoiceInstance.isHashExists(hashInvoice).call({from : accounts[0]});
-
+    const isInvoiceExists = await invoiceInstance.isHashExists(hashInvoice);
+    console.log(`isInvoiceExists - ${isInvoiceExists}`)
     // verify if invoice exists
     if(isInvoiceExists) {
-        const newInvoiceID = await invoiceInstance.getInvoiceID(hashInvoice).call({from : accounts[0]});
+        const newInvoiceID = await invoiceInstance.getInvoiceID(hashInvoice);
+        console.log(`newInvoiceID - ${newInvoiceID}`)
         assert.equal(newInvoiceID, invoiceID, "The invoice was not stored.");
     }    
   });
