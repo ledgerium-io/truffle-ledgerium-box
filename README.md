@@ -164,7 +164,7 @@ module.exports.CONTRACT = process.env.CONTRACT || "0xBeA37B161d94b2c3140376E2649
 
 ## **Run node express back end server**
 
-1. First ensure that you're in the truffle-ledgerium-box/api folder.
+1. First ensure that you're in the truffle-ledgerium-box/server folder.
 
 2. Run the npm install command. This will install all necessary node dependencies.
 
@@ -204,3 +204,5 @@ npm run dev
 ```
 http://localhost:4000
 ```
+
+<img src="truffle-ledgerium-box.png" width="640" height="201"/>
