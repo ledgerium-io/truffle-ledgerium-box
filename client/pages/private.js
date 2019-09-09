@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
-import Layout from '../components/layout/Layout'
+import Layout from '../components/layout/layout'
 import {
     Paper,    
     TextField,
     CircularProgress,
     ButtonBase
 } from '@material-ui/core';
-import getWeb3 from '../lib/getWeb3';
-import getContract from '../lib/getContract';
-import contractDefinition from '../lib/contracts/Invoice.json'
-import '../styleSheets/public.css'
+import '../stylesheets/public.css'
 import crypto from 'crypto';
 import axios from 'axios';
 
@@ -71,7 +68,7 @@ export default class Private extends Component {
                 "fromPublicKety": this.state.fromPublicKey,
                 "fromPrivateKey": this.state.toPublicKey
             }
-            axios.post('http://localhost:9086/private/addInvoiceId', params)
+            axios.post('http://localhost:9086/private/addinvoiceid', params)
             .then((result) => { 
                 console.log('result status: ', result.txResult);
                 if (result.data.txResult.status) {
@@ -95,7 +92,7 @@ export default class Private extends Component {
                 "invoiceIdHash": this.state.verifyInvoiceIdHash
             }
             // let result = await this.verifyInvoice(this.state.verifyInvoiceId)
-            axios.post('http://localhost:9086/private/isHashExists', params)
+            axios.post('http://localhost:9086/private/ishashexists', params)
             .then((result) => {
                 console.log('Result: ', result.data)
                 if (result.data.queryResult) {
@@ -119,7 +116,7 @@ export default class Private extends Component {
                 "invoiceIdHash": this.state.verifyInvoiceIdHash
             }
             // let result = await this.verifyInvoice(this.state.verifyInvoiceId)
-            axios.post('http://localhost:9086/private/isHashExists', params)
+            axios.post('http://localhost:9086/private/ishashexists', params)
             .then((result) => {
                 console.log('Result: ', result.data)
                 if (result.data.queryResult !== '') {
@@ -143,7 +140,7 @@ export default class Private extends Component {
                 "invoiceIdHash": this.state.getInvoiceIdHash
             }
             // let result = await this.verifyInvoice(this.state.verifyInvoiceId)
-            axios.post('http://localhost:9086/public/getInvoiceId', params)
+            axios.post('http://localhost:9086/public/getinvoiceid', params)
             .then((result) => {
                 console.log('Result: ', result.data)
                 if (result.data.queryResult) {

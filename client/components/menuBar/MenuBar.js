@@ -24,17 +24,17 @@ export default class MenuBar extends Component {
             },
             {
                 "id": "public",
-                "label": "Public",
+                "label": "Public Transactions",
                 "url": "/public"
             },
             {
-                "id": "publicMetamask",
-                "label": "Public Metamask",
-                "url": "/publicMetamask"
+                "id": "publicwallet",
+                "label": "Public Transactions using Ledgerium Wallet",
+                "url": "/publicwallet"
             },
             {
                 "id": "private",
-                "label": "Private",
+                "label": "Private Transactions",
                 "url": "/private"
             },
             

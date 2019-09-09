@@ -1,15 +1,12 @@
 import React,{ Component } from 'react';
-import Layout from './../components/layout/Layout';
+import Layout from './../components/layout/layout';
 
 export default class Index extends Component {
     constructor() {
         super();
     }
-
     componentDidMount() {
-
     }
-
     render() {
         return (
             <Layout>
