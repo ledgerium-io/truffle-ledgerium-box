@@ -184,33 +184,7 @@ npm run dev
 http://localhost:9086
 ```
 
-<<<<<<< HEAD
-## Run node express back end server
-
-1. First ensure that you're in the truffle-ledgerium-box/api folder.
-
-2. Run the npm install command. This will install all necessary node dependencies.
-
-```
-npm install
-```
-
-3. Run the node express back end server in dev mode. This will up bring the express server on PORT 9086.
-
-```
-npm run dev
-```
-
-4. Make a test get call to express server. This will return "Hello from the API message".
-
-```
-http://localhost:9086
-```
-
-## Run react front end application
-=======
 ## **Run react front end application**
->>>>>>> master
 
 1. First ensure that you're in the truffle-ledgerium-box/client folder.
 
@@ -230,8 +204,5 @@ npm run dev
 ```
 http://localhost:4000
 ```
-<<<<<<< HEAD
-=======
 
 <img src="truffle-ledgerium-box.png" width="640" height="201"/>
->>>>>>> master
