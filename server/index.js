@@ -7,6 +7,7 @@ const publicGetInvoiceIdHandler     = require('./src/handlers/public/getinvoicei
 const privateAddInvoiceIdHandler    = require('./src/handlers/private/addinvoiceid/addinvoiceidhandler');
 const privateIsHashExistsHandler    = require('./src/handlers/private/ishashexists/ishashexistshandler');
 const privateGetInvoiceIdHandler    = require('./src/handlers/private/getinvoiceid/getinvoiceidhandler');
+const privateDeployContractHandler  = require('./src/handlers/private/deploycontract/deploycontracthandler');
 
 const app               = express();
 const port              = process.env.PORT || 9086;
@@ -37,6 +38,7 @@ registerRoutes = () => {
     app.use('/private/addinvoiceid', privateAddInvoiceIdHandler);
     app.use('/private/ishashexists', privateIsHashExistsHandler);
     app.use('/private/getinvoiceid', privateGetInvoiceIdHandler);
+    app.use('/private/deploycontract', privateDeployContractHandler);
 }
 
 server = () => {

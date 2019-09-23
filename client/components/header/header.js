@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import * as logo from '../../assets/img/Ledgerium_logo_blue.svg';
+import * as logo from '../../assets/img/ledgerium_logo_blue.svg';
 import './style.css'
 
 export default class Header extends Component {

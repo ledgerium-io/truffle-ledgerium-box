@@ -1,20 +1,17 @@
 const express           = require('express');
+const quorumjs          = require('quorum-xlg-js')
 const fs                = require('fs');
-const quorumjs          = require('quorum-xlg-js');
 const getWeb3           = require('../../../lib/getweb3');
 const getContract       = require('../../../lib/getcontract');
 const contractDef       = require('./../../../lib/contracts/Invoice.json');
 const privateKeys       = require('./../../../keystroe/privatekey.json')
 const {
-    PRIVATE_CONTRACT,
-    PRIVATE_ACCOUNT       
-} = require('./../../../globalconfig')
+    CONTRACT        
+} = require('../../../globalconfig')
 
 const router        = express.Router();
 
 router.post('/', (req, res) => {
-    let invoiceId           = req.body.invoiceId;
-    let invoiceIdHash       = req.body.invoiceIdHash;
     let fromPublicKey       = req.body.fromPublicKey;
     let toPublicKey         = req.body.toPublicKey;
     let fromHost            = req.body.fromHost;
@@ -25,7 +22,7 @@ router.post('/', (req, res) => {
 
     let fromHostAddr        = `http://${fromHost}:${fromPort}`;
     let toHostAddr          = `https://${toHost}:${toPort}`;
-    
+
     let tlsOptions;
 
     try {
@@ -42,24 +39,24 @@ router.post('/', (req, res) => {
         return
     }
     console.log("TLS: ", tlsOptions);
-
+    let constructorParameters = [];
     getWeb3.getHttp(fromHostAddr)
     .then((web3) => {
-        getContract.getPrivate(web3, contractDef)
-        .then((contract) => {         
-            let encodedABI = contract.methods.addInvoice(invoiceId, invoiceIdHash).encodeABI();
+        getContract.getEncodedABI(contractDef, web3, constructorParameters)
+        .then((encodedABI) => {
+         
+            console.log("encodedABI: ", encodedABI)
             const rawTransactionManager = quorumjs.RawTransactionManager(web3, {
                 privateUrl:toHostAddr,
                 tlsSettings: tlsOptions
             });            
          
             let privateKey = '0x' + privateKeys[account];
-            // console.log("encodedABI: ", encodedABI)
 
             const txnParams = {
                 gasPrice: '0x746a528800',
                 gasLimit: 4300000,
-                to: PRIVATE_CONTRACT,
+                to: "",
                 value: 0,
                 data: encodedABI,        
                 isPrivate: true,
@@ -70,7 +67,7 @@ router.post('/', (req, res) => {
                 privateFor: [toPublicKey],
                 nonce: 0
             };
-         
+            
             web3.eth.getTransactionCount(account, 'pending').then((nonceToUse) => {
                 console.log("Nonce :", nonceToUse);
                 txnParams.nonce = nonceToUse;
@@ -78,10 +75,11 @@ router.post('/', (req, res) => {
                 console.log(txnParams);
                 const newTx = rawTransactionManager.sendRawTransaction(txnParams);
                 newTx.then((txResult) => {
-                    console.log("Tx Result Hash: ", txResult.transactionHash);
+                    deployedAddressGreeter = txResult.contractAddress;
+                    console.log("Deployed contract address: ", deployedAddressGreeter);
+                    console.log("Deployed transactionHash: ", txResult.transactionHash);
                     res.send({status: true, txResult: txResult});
                 }).catch((err) => {
-                    console.log("error");
                     console.log(err);
                     res.send({status: false});
                 });

@@ -6,11 +6,15 @@ const contractDef   = require('./../../../lib/contracts/Invoice.json');
 
 router.post('/', (req, res) => {
     let invoiceIdHash = req.body.invoiceIdHash;
+    let hostAddress = req.body.hostAddress;
+    let hostIp  = req.body.hostIp;
+
+    let host = `http://${hostAddress}:${hostIp}`;
 
     try {
-        getWeb3.get().then((web3) => {
+        getWeb3.getHttp(host).then((web3) => {    
             web3.eth.getAccounts().then((accounts) => {
-                getContract.get(web3, contractDef).then((contract) => {    
+                getContract.getPrivate(web3, contractDef).then((contract) => {    
                     contract.methods.isHashExists(invoiceIdHash).call({ from: accounts[0] }).then((queryResult) => {
                         console.log('Query Result: ', JSON.stringify(queryResult));
                         res.send({status: true, queryResult: queryResult});
