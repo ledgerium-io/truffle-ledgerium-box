@@ -15,7 +15,7 @@ const port              = process.env.PORT || 9086;
 boot = () => {
     intialize();
     registerRoutes();
-    server();    
+    server();
 }
 
 intialize = () => {

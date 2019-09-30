@@ -4,7 +4,7 @@ const fs                = require('fs');
 const getWeb3           = require('../../../lib/getweb3');
 const getContract       = require('../../../lib/getcontract');
 const contractDef       = require('./../../../lib/contracts/Invoice.json');
-const privateKeys       = require('./../../../keystroe/privatekey.json')
+const privateKeys       = require('./../../../keystore/privatekey.json')
 const {
     CONTRACT        
 } = require('../../../globalconfig')

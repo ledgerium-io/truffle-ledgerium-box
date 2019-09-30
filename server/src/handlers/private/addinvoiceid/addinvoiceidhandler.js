@@ -1,18 +1,30 @@
 const express           = require('express');
+const path              = require('path');
 const fs                = require('fs');
 const quorumjs          = require('quorum-xlg-js');
 const getWeb3           = require('../../../lib/getweb3');
 const getContract       = require('../../../lib/getcontract');
 const contractDef       = require('./../../../lib/contracts/Invoice.json');
-const privateKeys       = require('./../../../keystroe/privatekey.json')
+const privateKeys       = require('./../../../keystore/privatekey.json')
 const {
     PRIVATE_CONTRACT,
     PRIVATE_ACCOUNT       
 } = require('./../../../globalconfig')
-
-const router        = express.Router();
+const sslCerts          = require('./../../../generatecerts')
+const router            = express.Router();
 
 router.post('/', (req, res) => {
+
+    console.log(__dirname);
+    const directoryPath = path.join(__dirname,'./../../../../certs')
+    try {
+        if(!fs.existsSync(directoryPath + '/cert.key') || !fs.existsSync(directoryPath + '/cert.pem')) {
+            sslCerts.generateTLSCerts();
+        }
+    } catch(err) {
+        console.error(err);
+    }
+
     let invoiceId           = req.body.invoiceId;
     let invoiceIdHash       = req.body.invoiceIdHash;
     let fromPublicKey       = req.body.fromPublicKey;
@@ -21,17 +33,16 @@ router.post('/', (req, res) => {
     let toHost              = req.body.toHost;
     let fromPort            = req.body.fromPort;
     let toPort              = req.body.toPort;
-    let account             = req.body.account;
-
+    //let account             = req.body.account;
+    let account             = "0x69c30d313cae3233ee4e4dc35d8ba203c6655224";
     let fromHostAddr        = `http://${fromHost}:${fromPort}`;
-    let toHostAddr          = `https://${toHost}:${toPort}`;
+    let toPrivateURL        = `https://${fromHost}:${toPort}`;
     
     let tlsOptions;
-
     try {
          tlsOptions = {
-            key: fs.readFileSync('./certs/cert.key'),
-            clcert: fs.readFileSync('./certs/cert.pem'),
+            key: fs.readFileSync(directoryPath + '/cert.key'),
+            clcert: fs.readFileSync(directoryPath + '/cert.pem'),
             allowInsecure: true
         }
     } catch (e) {
@@ -45,11 +56,13 @@ router.post('/', (req, res) => {
 
     getWeb3.getHttp(fromHostAddr)
     .then((web3) => {
-        getContract.getPrivate(web3, contractDef)
-        .then((contract) => {         
-            let encodedABI = contract.methods.addInvoice(invoiceId, invoiceIdHash).encodeABI();
+        //getContract.getPrivate(web3, contractDef)
+        let constructorParameters = [];
+        getContract.getEncodedABI(contractDef, web3, constructorParameters)
+        .then((encodedABI) => {         
+            //let encodedABI = contract.methods.addInvoice(invoiceId, invoiceIdHash).encodeABI();
             const rawTransactionManager = quorumjs.RawTransactionManager(web3, {
-                privateUrl:toHostAddr,
+                privateUrl:toPrivateURL,
                 tlsSettings: tlsOptions
             });            
          
@@ -59,7 +72,7 @@ router.post('/', (req, res) => {
             const txnParams = {
                 gasPrice: '0x746a528800',
                 gasLimit: 4300000,
-                to: PRIVATE_CONTRACT,
+                to: "",
                 value: 0,
                 data: encodedABI,        
                 isPrivate: true,
@@ -78,6 +91,8 @@ router.post('/', (req, res) => {
                 console.log(txnParams);
                 const newTx = rawTransactionManager.sendRawTransaction(txnParams);
                 newTx.then((txResult) => {
+                    var deployedContractAddress = txResult.contractAddress;
+                    console.log("Invoice deployed contract address: ", deployedContractAddress);
                     console.log("Tx Result Hash: ", txResult.transactionHash);
                     res.send({status: true, txResult: txResult});
                 }).catch((err) => {

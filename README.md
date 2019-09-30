@@ -45,9 +45,9 @@ The `truffle-config.js` under truffle-ledgerium-box folder
 module.exports = {
  networks: {
    flinders: {
-     host: '138.197.193.201', //flinders testnet, 'testnet.ledgerium.net' for toorak
+     host: 'flinders01.ledgerium.io', //flinders testnet, 'testnet.ledgerium.net' for toorak
      port: 8545, //Need to check with RPC port of the specific ledgerium node, default 8545
-     network_id: '2020', // Match any network id
+     network_id: '2019', // Match any network id
      from: '0xef759369e2b95b207fcc9ec2a6925fe3f8945f8f'
    }
  },
@@ -65,7 +65,7 @@ module.exports = {
  }
 };
 ```
-User needs to interact with one of the **flinders’s** block producers node i.e. `138.197.193.201` with its RPC port 8545.
+User needs to interact with one of the **flinders’s** block producers node i.e. `flinders01.ledgerium.io` with its RPC port 8545.
 Set the `from` field to ”0xef759369e2b95b207fcc9ec2a6925fe3f8945f8f”
 
 - **Migrate your invoice contract to the Ledgerium Flinders Blockchain node**.
@@ -82,7 +82,7 @@ Starting migrations...
 
 2_deploy_contracts.js
 =====================
-Going to connect to  http://138.197.193.201:8545
+Going to connect to  http://flinders01.ledgerium.io:8545
 
    Replacing 'Invoice'
    -------------------
@@ -114,13 +114,13 @@ Summary
 
 - **Connect to Ledgerium Blockchain Flinders testnet** 
   
-  Connect with one of the Block Producer’s node `138.197.193.201`. Additionally, the Ledgerium account which needs to be used to execute public transactions has to be imported as the node’s native account. Below are the steps showing, how to connect to the remote node on RPC `http://138.197.193.201:8545` and import the account using its private key, along with some password (which needs to be remembered for later usages too).
+  Connect with one of the Block Producer’s node `flinders01.ledgerium.io`. Additionally, the Ledgerium account which needs to be used to execute public transactions has to be imported as the node’s native account. Below are the steps showing, how to connect to the remote node on RPC `http://flinders01.ledgerium.io:8545` and import the account using its private key, along with some password (which needs to be remembered for later usages too).
 
 ``` 
->  geth attach http://138.197.193.201:8545
+>  geth attach http://flinders01.ledgerium.io:8545
 Welcome to the Geth JavaScript console!
 
-instance: Geth/validator-138.197.193.201/v1.8.12-stable-46338e95(quorum-v2.2.1)/linux-amd64/go1.11.10
+instance: Geth/validator-flinders01.ledgerium.io/v1.8.12-stable-46338e95(quorum-v2.2.1)/linux-amd64/go1.11.10
 coinbase: 0x1a67eea756b9c074219dbbd1a68b7a6919412645
 at block: 19010 (Wed, 04 Sep 2019 00:38:13 AEST)
  datadir: /eth
@@ -133,10 +133,10 @@ at block: 19010 (Wed, 04 Sep 2019 00:38:13 AEST)
 Since the transactions will be sent unsigned by the private key, the account needs to be unlocked before executing it. It can be done 2 ways. Go to **geth** console
 
 ```
-geth attach http://138.197.193.201:8545
+geth attach http://flinders01.ledgerium.io:8545
 Welcome to the Geth JavaScript console!
 
-instance: Geth/validator-138.197.193.201/v1.8.12-stable-46338e95(quorum-v2.2.1)/linux-amd64/go1.11.10
+instance: Geth/validator-flinders01.ledgerium.io/v1.8.12-stable-46338e95(quorum-v2.2.1)/linux-amd64/go1.11.10
 coinbase: 0x1a67eea756b9c074219dbbd1a68b7a6919412645
 at block: 29279 (Wed, 04 Sep 2019 14:53:58 AEST)
  datadir: /eth
@@ -176,6 +176,14 @@ npm install
 
 ```
 npm run dev
+> truffle-ledgerium-box@1.0.0 dev /Users/rahulgolash/Rahul/Ledgerium/CoreLedgerium/truffle-ledgerium-box/server
+> nodemon index.js
+
+[nodemon] 1.19.2
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching dir(s): *.*
+[nodemon] starting `node index.js`
+Listening on Port: 9086
 ```
 
 4. Make a test get call to express server. This will return "Hello from the API message".
@@ -198,6 +206,23 @@ npm install
 
 ```
 npm run dev
+> truffle-ledgerium-box-reactclient@1.0.0 dev /Users/rahulgolash/Rahul/Ledgerium/CoreLedgerium/truffle-ledgerium-box/client
+> nodemon index.js
+
+[nodemon] 1.19.2
+[nodemon] to restart at any time, enter `rs`
+[nodemon] watching dir(s): *.*
+[nodemon] starting `node index.js`
+[ ready ] compiled successfully
+[ wait ]  compiling ...
+-> Ready on port 4000
+[ ready ] compiled successfully
+[ event ] build page: /
+[ wait ]  compiling ...
+[ ready ] compiled successfully
+[ event ] build page: /next/dist/pages/_error
+[ wait ]  compiling ...
+[ ready ] compiled successfully
 ```
 4. Check out to the following URL to access the web application.
 
