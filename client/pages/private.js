@@ -17,10 +17,17 @@ export default class Private extends Component {
             invoiceId: '',
             invoiceIdHash: '',
             fromPublicKey: '',
+            fromHost: '',
+            fromPort: '',
             toPublicKey: '',
-            fromNodePort: '',
+            toHost: '',
+            toPort: '',
             verifyInvoiceIdHash: '',
+            verifyInvoiceIdFromHost: '',
+            verifyInvoiceIdFromPort: '',
             getInvoiceIdHash: '',
+            getInvoiceIdFromHost: '',
+            getInvoiceIdFromPort: '',            
             accounts: [],
             contract: '',
             submitCircularProgress: false,
@@ -36,37 +43,18 @@ export default class Private extends Component {
         this.setState({[event.target.name]: event.target.value})
     }
 
-    addInvoice = async (invoiceId) => {        
-        console.log('Invoice ID: ',invoiceId);
-        let invoiceIdHash = await this.prepareHash(invoiceId)._v;
-        console.log('Invoice ID Hash: ', invoiceIdHash);
-
-        let txResult = await this.state.contract.methods.addInvoice(invoiceId, invoiceIdHash).send({ from: this.state.accounts[0], gas:3000000 });
-        console.log('Tx Result: ',txResult);        
-        return txResult;
-    };
-
-    verifyInvoice = async (invoiceId) => {
-        console.log('Invoice ID: ', invoiceId);
-        let invoiceIdHash = this.prepareHash(invoiceId)._v;
-        console.log('Invoice ID Hash: ', invoiceIdHash);
-        let txResult = await this.state.contract.methods.isHashExists(invoiceIdHash).call({ from: this.state.accounts[0] })
-        console.log('Tx Result: ', txResult);
-        return txResult;
-    }
-
-    prepareHash = async (invoiceId) => {
-        return crypto.createHash('sha256').update(invoiceId).digest('hex');
-    }
-
     handleSubmit = async () => {
         if (this.state.invoiceId !== '' && this.state.invoiceIdHash !== '') {
             this.setState({submitCircularProgress: true})
             let params = {
                 "invoiceId": this.state.invoiceId,
-                "invoiceIdHash":  this.state.invoiceIdHash,
-                "fromPublicKety": this.state.fromPublicKey,
-                "fromPrivateKey": this.state.toPublicKey
+                "invoiceIdHash":  this.state.invoiceIdHash,                
+                "fromPublicKey": this.state.fromPublicKey,
+                "fromHost": this.state.fromHost,
+                "fromPort":  this.state.fromPort,
+                "toPublicKey": this.state.toPublicKey,
+                "toHost":  this.state.toHost,
+                "toPort": this.state.toPort                
             }
             axios.post('http://localhost:9086/private/addinvoiceid', params)
             .then((result) => { 
@@ -110,16 +98,17 @@ export default class Private extends Component {
     }
 
     handleIsHashExists = async () => {
-        if (this.state.verifyInvoiceIdHash !== '') {
+        if (this.state.verifyInvoiceIdHash !== '' || this.state.verifyInvoiceIdFromHost !== '' || this.state.verifyInvoiceIdFromPort !== '') {
             this.setState({verifyCircularProgress: true})
             let params = {
-                "invoiceIdHash": this.state.verifyInvoiceIdHash
-            }
-            // let result = await this.verifyInvoice(this.state.verifyInvoiceId)
+                "invoiceIdHash": this.state.verifyInvoiceIdHash,
+                "hostAddress": this.state.verifyInvoiceIdFromHost,
+                "hostPort": this.state.verifyInvoiceIdFromPort
+            }            
             axios.post('http://localhost:9086/private/ishashexists', params)
             .then((result) => {
                 console.log('Result: ', result.data)
-                if (result.data.queryResult !== '') {
+                if (result.data.queryResult) {
                     this.setState({verifyInvoiceIdHash: '', verifyCircularProgress: false});
                     alert(`Invoice ID Hash Exists!`)
                 } else {
@@ -134,13 +123,14 @@ export default class Private extends Component {
     }
 
     handleGetInvoiceId = () => {
-        if (this.state.getInvoiceIdHash !== '') {
+        if (this.state.getInvoiceIdHash !== '' || this.state.getInvoiceIdFromHost !== '' || this.state.getInvoiceIdFromPort !== '') {
             this.setState({getInvoiceIdCircularProgress: true})
             let params = {
-                "invoiceIdHash": this.state.getInvoiceIdHash
-            }
-            // let result = await this.verifyInvoice(this.state.verifyInvoiceId)
-            axios.post('http://localhost:9086/public/getinvoiceid', params)
+                "invoiceIdHash": this.state.getInvoiceIdHash,
+                "hostAddress": this.state.getInvoiceIdFromHost,
+                "hostPort": this.state.getInvoiceIdFromPort
+            }            
+            axios.post('http://localhost:9086/private/getinvoiceid', params)
             .then((result) => {
                 console.log('Result: ', result.data)
                 if (result.data.queryResult) {
@@ -183,7 +173,22 @@ export default class Private extends Component {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <TextField onChange={this.handleChange} type="text" name="fromNodePort" label="Sender PORT" value={this.state.fromNodePort}/>
+                                        <TextField onChange={this.handleChange} type="text" name="fromHost" label="Sender HOST" value={this.state.fromHost}/>
+                                    </td>
+                                    <td>
+                                        <TextField onChange={this.handleChange} type="text" name="fromPort" label="Sender PORT" value={this.state.fromPort}/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <TextField onChange={this.handleChange} type="text" name="toHost" label="Receiver HOST" value={this.state.receiverHost}/>
+                                    </td>
+                                    <td>
+                                        <TextField onChange={this.handleChange} type="text" name="toPort" label="Receiver PORT" value={this.state.receiverPort}/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>                                        
                                     </td>
                                     <td>
                                         {(this.state.submitCircularProgress)? <CircularProgress/> : <ButtonBase size="small" onClick={this.handleSubmit} style={{backgroundColor: '#004681', color:'#ffffff', padding: '10px'}}>Submit</ButtonBase>}
@@ -197,6 +202,14 @@ export default class Private extends Component {
                             <table>
                                 <tr>
                                     <td>
+                                        <TextField onChange={this.handleChange} type="text" name="verifyInvoiceIdFromHost" label="Sender HOST" value={this.state.verifyInvoiceIdFromHost}/>
+                                    </td>
+                                    <td>
+                                        <TextField onChange={this.handleChange} type="text" name="verifyInvoiceIdFromPort" label="Sender PORT" value={this.state.verifyInvoiceIdFromPort}/>
+                                    </td>
+                                </tr>
+                                <tr>                                    
+                                    <td>
                                         <TextField onChange={this.handleChange} type="text" name="verifyInvoiceIdHash" label="Invoice ID Hash" value={this.state.verifyInvoiceIdHash}/>
                                     </td>
                                     <td>
@@ -208,6 +221,14 @@ export default class Private extends Component {
                         <div>
                             <div className="widgetHeading">Get Invoice Id</div>
                             <table>
+                                <tr>
+                                    <td>
+                                        <TextField onChange={this.handleChange} type="text" name="getInvoiceIdFromHost" label="Sender HOST" value={this.state.getInvoiceIdFromHost}/>
+                                    </td>
+                                    <td>
+                                        <TextField onChange={this.handleChange} type="text" name="getInvoiceIdFromPort" label="Sender PORT" value={this.state.getInvoiceIdFromPort}/>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>
                                         <TextField onChange={this.handleChange} type="text" name="getInvoiceIdHash" label="Invoice ID Hash" value={this.state.getInvoiceIdHash}/>

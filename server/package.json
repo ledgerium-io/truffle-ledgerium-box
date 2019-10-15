@@ -25,7 +25,10 @@
     "node-metamask": "^1.1.2",
     "nodemon": "^1.18.11",
     "path": "^0.12.7",
-    "web3": "^1.0.0-beta.36"
+    "quorum-js": "^0.3.1",
+    "quorum-xlg-js": "npm:quorum-xlg-js@^0.1.0",
+    "web3": "^1.0.0-beta.36",
+    "node-forge": "^0.8.5"
   },
   "bugs": {
     "url": "https://github.com/ledgerium-io/truffle-ledgerium-box/issues"

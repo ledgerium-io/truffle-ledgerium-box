@@ -1,9 +1,9 @@
 module.exports = {
   networks: {
     flinders: {
-      host: '138.197.193.201', //toorak testnet, '138.197.193.201' for flinders
+      host: 'flinders01.ledgerium.io', //flinders testnet, 'toorak01.ledgerium.io' for toorak
       port: 8545, //Need to check with RPC port of the specific ledgerium node, default 8545
-      network_id: '2020', // Match any network id
+      network_id: '2019', // Match any network id
       from: '0xd34fC4abe46BfDb1939e00b3dcd5B27911a6C05d'
     }
   },
