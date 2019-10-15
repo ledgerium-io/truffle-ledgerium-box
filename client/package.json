@@ -1,7 +1,7 @@
 {
   "name": "truffle-ledgerium-box-reactclient",
   "version": "1.0.0",
-  "description": "",
+  "description": "reactclient for ledgerium truffle box",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js"
